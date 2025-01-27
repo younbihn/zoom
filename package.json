@@ -1,0 +1,9 @@
+{
+  "name": "zoom",
+  "version": "1.0.0",
+  "description": "Zoom clone using WebRTC and Websocket",
+  "license": "LYB",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

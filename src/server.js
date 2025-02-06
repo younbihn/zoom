@@ -24,16 +24,18 @@ const sockets = [];
 
 wss.on("connection", (socket) => {
     sockets.push(socket);
+    socket["nickname"] = "Anonnymous";
     console.log("Conneted to Browser");
     socket.on("close", onSocketClose);
-    socket.on("message", (message) => {
-        if (message instanceof Buffer) {
-            const text = message.toString("utf-8");
-            console.log("Received:", text);
-            sockets.forEach(aSocket => aSocket.send(text));
-        } else {
-            console.log("Received non-buffer message:", message);
-            sockets.forEach(aSocket => aSocket.send(text));
+    socket.on("message", (msg) => {
+        const message = JSON.parse(msg);
+        switch (message.type) {
+            case "new_message":
+                sockets.forEach((aSocket) =>
+                aSocket.send(`${socket.nickname}: ${message.payload}`)
+                );
+            case "nickname":
+                socket["nickname"] = message.payload;
         }
     });
 });

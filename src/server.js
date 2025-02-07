@@ -1,6 +1,7 @@
 import http from "http";
 import express from "express";
 import SocketIO from "socket.io";
+import { disconnect } from "process";
 
 const app = express();
 
@@ -20,11 +21,20 @@ function onSocketClose() {
 }
 
 wsServer.on("connection", (socket) => {
+    socket.onAny((event) => {
+        console.log(`Socket Event:${event}`);
+    });
     socket.on("enter_room", (roomName, done) => {
-        console.log(roomName);
-        setTimeout(() => {
-        done("Backend done.");
-        });
+        socket.join(roomName);
+        done();
+        socket.to(roomName).emit("welcome");
+    });
+    socket.on("disconnecting", () => {
+        socket.rooms.forEach((room) => socket.to(room).emit("bye"));            
+    });
+    socket.on("new_message", (msg, room, done) => {
+        socket.to(room).emit("new_message", msg);
+        done();
     });
 });
 

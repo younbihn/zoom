@@ -9,12 +9,17 @@ html(lang="en")
         header 
             h1 Zoom clone coding
         main
-            div#myStream
-                video#myFace(autoplay,playsinline, width="400", height="400")
-                button#mute Mute
-                button#camera Turn Camera Off
-                select#cameras
-            //- SocketIO
+            div#welcome
+                form
+                    input(placeholder="Room name", required, type = "text")
+                    button Enter room
+            div#call
+                div#myStream
+                    video#myFace(autoplay,playsinline, width="400", height="400")
+                    button#mute Mute
+                    button#camera Turn Camera Off
+                    select#cameras
+                //- SocketIO
             //- div#welcome
             //-     form
             //-         input(placeholder="Room name", required, type = "text")
@@ -23,7 +28,7 @@ html(lang="en")
             //-     ul
             //- div#room
             //-     h3
-            //-     ul 
+            //-     ul
             //-     form#name
             //-         input(placeholder="Nickname", required, type = "text")
             //-         button Save

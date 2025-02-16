@@ -1,3 +1,4 @@
+//WebRTC
 const socket = io();
 
 const welcome = document.getElementById("welcome");
